@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Historique{% endblock %}
+
+{% block content %}
+<h1>Historique des Actions</h1>
+<ul>
+{% for action in actions %}
+    <li>{{ action }}</li>
+{% endfor %}
+</ul>
+{% if not actions %}
+    <p>Aucun historique.</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Tickets{% endblock %}
+
+{% block content %}
+<h1>Gestion des Tickets</h1>
+<form method="POST">
+    <label>Client: <input type="text" name="client" required></label><br>
+    <label>Description: <textarea name="description" required></textarea></label><br>
+    <label>Priorité:
+        <select name="priorite">
+            <option value="basse">Basse</option>
+            <option value="moyenne" selected>Moyenne</option>
+            <option value="haute">Haute</option>
+        </select>
+    </label><br>
+    <button type="submit">Créer Ticket</button>
+</form>
+
+<h2>Tickets Ouverts</h2>
+<ul>
+{% for ticket in tickets %}
+    <li>ID {{ ticket.id }}: {{ ticket.client }} - {{ ticket.description }} ({{ ticket.priorite }}) - {{ ticket.created_at.strftime('%Y-%m-%d %H:%M') }}
+        <form method="POST" action="{{ url_for('main.add_to_queue', ticket_id=ticket.id) }}" style="display:inline; margin-left:10px;">
+            <button type="submit">Ajouter à la file</button>
+        </form>
+    </li>
+
+{% endfor %}
+</ul>
+{% endblock %}

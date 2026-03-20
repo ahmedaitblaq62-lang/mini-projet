@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Accueil - HelpDesk{% endblock %}
+
+{% block content %}
+<h1>Bienvenue sur HelpDesk</h1>
+<p>Cette application permet de gérer vos tickets de support.</p>
+<ul>
+    <li><a href="{{ url_for('main.tickets') }}">Créer et voir les tickets</a></li>
+    <li><a href="{{ url_for('main.queue') }}">File d'attente</a></li>
+    <li><a href="{{ url_for('main.history') }}">Historique des actions</a></li>
+</ul>
+{% endblock %}

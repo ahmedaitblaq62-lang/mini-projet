@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}File d'Attente{% endblock %}
+
+{% block content %}
+<h1>File d'Attente</h1>
+<p id="message" style="color: green;"></p>
+<form method="POST" action="{{ url_for('main.process_ticket') }}">
+
+<button type="submit" id="process-btn">Traiter Prochain Ticket</button>
+</form>
+<ul id="queue-list">
+{% for ticket in tickets %}
+    <li>ID {{ ticket.id }}: {{ ticket.client }} - {{ ticket.description }} ({{ ticket.priorite }})</li>
+{% endfor %}
+</ul>
+{% if not tickets %}
+    <p>Aucun ticket en file d'attente.</p>
+{% endif %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const btn = document.getElementById('process-btn');
+  const ul = document.getElementById('queue-list');
+  const msg = document.getElementById('message');
+  
+  function checkEmpty() {
+    if (ul.children.length === 0) {
+      btn.disabled = true;
+      btn.textContent = 'File vide';
+    } else {
+      btn.disabled = false;
+      btn.textContent = 'Traiter Prochain Ticket';
+    }
+  }
+  checkEmpty();
+  
+  const form = btn.closest('form');
+  form.addEventListener('submit', function() {
+    msg.textContent = 'Traitement en cours...';
+    btn.disabled = true;
+    setTimeout(() => location.reload(), 1500);
+  });
+  
+  setInterval(() => location.reload(), 10000);
+});
+</script>
+{% endblock %}
